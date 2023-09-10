@@ -91,13 +91,6 @@ export async function embeddingsLookup(
   req,
   res,
 ) {
-  const raw = req.body.raw;
-  if (!raw) {
-    res.status(400).json({
-      message: "raw can't be null",
-    });
-    return;
-  }
   const embedding = JSON.stringify(sampleEmbedding);
   console.log(embedding);
   const tables = db.prepare(

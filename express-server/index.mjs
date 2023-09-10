@@ -5,7 +5,7 @@ import { embeddings, embeddingsLookup } from './embeddings.mjs'
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3200;
 
 app.use(express.json({
   limit: "50mb",
