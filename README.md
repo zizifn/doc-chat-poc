@@ -3,6 +3,7 @@
 **如果是 Windows 用户，请安装 Linux on Windows (WSL)**
 
 https://learn.microsoft.com/zh-cn/windows/wsl/install
+https://www.bilibili.com/video/BV1n14y1x7Y7/
 
 ## Angular-client
 
