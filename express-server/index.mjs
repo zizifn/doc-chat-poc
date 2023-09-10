@@ -1,11 +1,9 @@
 import express from 'express';
-import dotenv from "dotenv";
+import { Config } from './config.mjs'
 import { embeddings, embeddingsLookup } from './embeddings.mjs'
 
-dotenv.config();
-
 const app = express();
-const port = process.env.PORT || 3200;
+const port = Config.PORT;
 
 app.use(express.json({
   limit: "50mb",
@@ -16,6 +14,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/embeddings", embeddings);
 app.use("/api/embeddingslookup", embeddingsLookup);
+app.use("/api/chat", embeddingsLookup);
 
 
 app.listen(port, () => {
