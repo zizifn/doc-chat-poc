@@ -26,4 +26,12 @@ npm i
 npm run dev
 ```
 
-然后放 `http://localhost:3200/api/embeddingslookup`, 如果有结果就证明一切正常。
+然后访问 `http://localhost:3200/api/embeddingslookup`, 如果有结果就证明一切正常。
+
+### more info
+
+如果你想知道数据库中的数据，访问如下 URL
+
+http://localhost:3200/api/tables/vss_chat_content
+
+http://localhost:3200/api/tables/chat_content

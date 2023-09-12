@@ -5,7 +5,7 @@ import { Injectable } from "@angular/core";
 })
 export class OpenAIService {
   async createEmbeddings(content: string) {
-    const embeddingsResp = await fetch("api/embeddings", {
+    const embeddingsResp = await fetch("api/embeddings/create", {
       method: "POST",
       body: JSON.stringify({
         raw: content,

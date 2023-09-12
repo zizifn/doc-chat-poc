@@ -12,7 +12,6 @@ const db = new Database("chat-doc.db");
 
 
 sqlite_vss.load(db);
-
 // https://observablehq.com/@asg017/introducing-sqlite-vss
 
 // db.exec('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)');
@@ -31,28 +30,6 @@ db.exec(
 )
 // db.prepare(`DELETE FROM chat_content`).run();
 // db.prepare(`delete from vss_chat_content`).run();
-
-const sampleContent = 'The food was delicious and the waiter...';
-const row = db.prepare('SELECT rowid, * FROM chat_content WHERE content = ?').get(sampleContent);
-const vss_chat_content = db.prepare(`SELECT rowid, content_embedding FROM vss_chat_content`).all();
-// not exsit
-if (!row) {
-  const result = db.prepare('INSERT INTO chat_content (content, content_embedding) VALUES (?, ?)').run(sampleContent, JSON.stringify(sampleEmbedding));
-  const result2 = db.prepare('INSERT INTO vss_chat_content (rowid, content_embedding) VALUES (?, ?)').run(1, JSON.stringify(sampleEmbedding));
-  console.log(result);
-  console.log(result2);
-}
-const row2 = db.prepare('SELECT rowid, * FROM chat_content').all()
-const vss_chat_content2 = db.prepare(`SELECT rowid, content_embedding FROM vss_chat_content`).all();
-console.log('-------------', row2.map(item => item.rowid));
-console.log(vss_chat_content2.map(item => item.rowid));
-
-// const tables = db.prepare(
-//   `SELECT * FROM sqlite_master
-// WHERE type='table'`
-// ).all();
-
-// console.log(tables);
 
 /**
  * 
@@ -200,4 +177,15 @@ async function createOpenaiEmbeddings(content) {
 
 
 }
+
+export async function tables(
+  req,
+  res,
+) {
+  const table = req.params.table;
+  const tableItems = db.prepare(`SELECT rowid, * FROM ${table}`).all()
+
+  res.json(tableItems);
+}
+
 
