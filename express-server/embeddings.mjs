@@ -120,7 +120,7 @@ export async function embeddings(
   });
 }
 
-export async function embeddingsLookup(
+export async function lookup(
   req,
   res,
 ) {
@@ -158,6 +158,21 @@ left join chat_content on chat_content.rowid = matches.rowid
   res.json(tables);
 }
 
+export async function embeddingsLookup(
+  req,
+  res,
+) {
+  const raw = req.body.raw;
+  if (!raw) {
+    res.status(400).json({
+      message: "raw can't be null",
+    });
+    return;
+  }
+
+  res.json({});
+}
+
 
 /**
  * 
@@ -167,7 +182,7 @@ left join chat_content on chat_content.rowid = matches.rowid
 async function createOpenaiEmbeddings(content) {
 
   console.log('--------------------------', Config.OPENAI_KEY);
-  const resp = await fetch("https://api.openai.com/v1/embeddings", {
+  const resp = await fetch(`${Config.OPENAI_HOST}/v1/embeddings`, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",

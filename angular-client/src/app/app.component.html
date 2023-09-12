@@ -15,11 +15,9 @@
       <textarea class="content" [value]="fileContent"></textarea>
     </div>
     <div class="doc-questions">
-      <div class="doc-chat-history"></div>
-      <mat-form-field class="doc-chat-box">
-        <mat-label>Chat with the doc</mat-label>
-        <textarea matInput placeholder=""></textarea>
-      </mat-form-field>
+      <textarea disabled class="doc-chat-history" [value]="chatHistory"></textarea>
+      <input type="text" name="" id="" (change)="askDoc($event)">
+      <button>send</button>
     </div>
   </div>
 </div>

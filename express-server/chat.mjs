@@ -1,53 +1,59 @@
-import { Document } from "langchain/document";
-import { CharacterTextSplitter } from "langchain/text_splitter";
-// import { Database } from "sqlite3";
-import Database from "better-sqlite3";
-import * as sqlite_vss from "sqlite-vss";
 import { Config } from './config.mjs'
-import pkg from 'express';
-const { Express, Request, Response } = pkg;
-import { sampleEmbedding } from './constant.mjs'
 
 export async function chat(
   req,
   res,
 ) {
-  const raw = req.body.context;
-  if (!raw) {
+  const chatObj = req.body;
+  if (!chatObj.context) {
     res.status(400).json({
       message: "raw can't be null",
     });
     return;
   }
 
-
-
-  res.json({});
+  const resp = await chatCompletions(chatObj);
+  res.json(resp);
 }
 
 
 /**
  * 
- * @param {string | string[]} content 
- * @returns  {Promise<number[][]>}
+ * @param {{context: string, question:string}} chatObj 
+ * @returns  {Promise<string>}
  */
-async function createOpenaiEmbeddings(content) {
+async function chatCompletions(chatObj) {
   console.log('--------------------------', Config.OPENAI_KEY);
-  const resp = await fetch("https://api.openai.com/v1/embeddings", {
+  const docPrompt = `Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+
+  ${chatObj.context}
+  
+  Question: ${chatObj.question}
+  Answer in context language`
+
+  const resp = await fetch(`${Config.OPENAI_HOST}/v1/chat/completions`, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${Config.OPENAI_KEY}`
     },
     body: JSON.stringify({
-      input: content,
-      model: "text-embedding-ada-002"
+      "model": "gpt-3.5-turbo",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a helpful assistant."
+        },
+        {
+          "role": "user",
+          "content": docPrompt
+        }
+      ]
     })
   });
-  const embeddingsBody = await resp.json();
-  console.log(embeddingsBody);
-  console.log("usage", embeddingsBody.usage);
-  return embeddingsBody.data.map(item => item.embedding)
+  const chatBody = await resp.json();
+  console.log("usage", chatBody.usage);
+  return chatBody;
 
 
 }

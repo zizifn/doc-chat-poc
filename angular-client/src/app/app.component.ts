@@ -10,6 +10,8 @@ export class AppComponent {
   title = "my-app";
 
   fileContent = "";
+  
+  chatHistory = "";
 
   constructor(private openaiService: OpenAIService) {
   }
@@ -28,5 +30,17 @@ export class AppComponent {
 
     const result = await this.openaiService.createEmbeddings(this.fileContent);
     console.log(result);
+  }
+
+  async askDoc(event: Event){
+    const question =  (event.target as HTMLInputElement).value;
+    // get embed
+    const result = await this.openaiService.getEmbeddings(question);
+    console.log(result);
+    const context = result.map(item => item.content).join("\n")
+
+    const chat = await this.openaiService.chat(context, question);
+    console.log(chat);
+    this.chatHistory = chat?.choices?.[0].message.content;
   }
 }
