@@ -54,7 +54,7 @@ export async function embeddings(
   // split by "\n\n"
   const splitter = new CharacterTextSplitter({
     separator: "\r\n\r\n",
-    chunkSize: 500,
+    chunkSize: 100,
     chunkOverlap: 10,
   });
   const output = await splitter.createDocuments([raw]);
@@ -110,7 +110,7 @@ export async function lookup(
   }
 
   const resp = await createOpenaiEmbeddings(raw);
-  console.log(resp[0]);
+  // console.log(resp[0]);
   const tables = db.prepare(
     `
 with matches as (
@@ -130,7 +130,7 @@ left join chat_content on chat_content.rowid = matches.rowid
   `
   ).all();
 
-  console.log(tables);
+  // console.log(tables);
 
   res.json(tables);
 }
@@ -158,7 +158,6 @@ export async function embeddingsLookup(
  */
 async function createOpenaiEmbeddings(content) {
 
-  console.log('--------------------------', Config.OPENAI_KEY);
   const resp = await fetch(`${Config.OPENAI_HOST}/v1/embeddings`, {
     method: 'POST',
     headers: {
@@ -171,7 +170,6 @@ async function createOpenaiEmbeddings(content) {
     })
   });
   const embeddingsBody = await resp.json();
-  console.log(embeddingsBody);
   console.log("usage", embeddingsBody.usage);
   return embeddingsBody.data.map(item => item.embedding)
 

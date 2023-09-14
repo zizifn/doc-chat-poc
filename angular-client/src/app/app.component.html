@@ -10,14 +10,16 @@
           Upload
           <input type="file" accept=".txt" (change)="loadFile($event)" />
         </label>
-        <button (click)="createEmbeddings()">Index</button>
+        <button (click)="createEmbeddings()">Embedding!!</button>
       </div>
       <textarea class="content" [value]="fileContent"></textarea>
     </div>
     <div class="doc-questions">
       <textarea disabled class="doc-chat-history" [value]="chatHistory"></textarea>
-      <input type="text" name="" id="" (change)="askDoc($event)">
-      <button>send</button>
+      <div class="doc-chat">
+        <input type="text" name="" id="" (change)="askDoc($event)">
+
+      </div>
     </div>
   </div>
 </div>

@@ -36,6 +36,7 @@
         resize: none;
         width: 100%;
         height: 100%;
+        border: 3px solid green;
       }
     }
     .doc-questions {
@@ -43,12 +44,17 @@
       display: flex;
       flex-direction: column;
       .doc-chat-history {
-        flex: 1;
-        border: 1px solid red;
+        flex: 2;
+        border: 5px solid red;
       }
       .doc-chat {
         flex: 1;
-        border: 1px solid green;
+        border: 3px solid yellow;
+        input {
+          width: 100%;
+          font-size: 2rem;
+          font-weight: 700;
+        }
       }
     }
   }
