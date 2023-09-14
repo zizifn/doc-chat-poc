@@ -8,7 +8,8 @@ https://learn.microsoft.com/zh-cn/windows/wsl/install
 B 站 UP 主教程：
 https://www.bilibili.com/video/BV1n14y1x7Y7/
 
-**请注意：在WSL或Linux中，为了使依赖包"sqlite-vss"能够正常工作还需要执行下列安装：**
+**请注意：在 WSL 或 Linux 中，为了使依赖包"sqlite-vss"能够正常工作还需要执行下列安装：**
+
 ```
 sudo apt-get update
 sudo apt-get install -y libgomp1 libatlas-base-dev liblapack-dev
@@ -41,3 +42,6 @@ npm run dev
 http://localhost:3200/api/tables/vss_chat_content
 
 http://localhost:3200/api/tables/chat_content
+
+删除所有数据库。
+http://localhost:3200/api/delete

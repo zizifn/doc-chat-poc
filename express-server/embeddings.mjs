@@ -28,8 +28,7 @@ db.exec(
     content_embedding(1536)
   );`
 )
-// db.prepare(`DELETE FROM chat_content`).run();
-// db.prepare(`delete from vss_chat_content`).run();
+
 
 /**
  * 
@@ -184,6 +183,17 @@ export async function tables(
   const tableItems = db.prepare(`SELECT rowid, * FROM ${table}`).all()
 
   res.json(tableItems);
+}
+
+export async function deleteTables(
+  req,
+  res,
+) {
+  db.prepare(`DELETE FROM chat_content`).run();
+  db.prepare(`delete from vss_chat_content`).run();
+  res.json({
+    message: "deleted all tables"
+  });
 }
 
 
